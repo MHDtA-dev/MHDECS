@@ -30,12 +30,17 @@ Example with inheritance:
       ...
   }
 
-  auto entity = MHDECS::Registry::registerEntity<MyEntity>(constructor args...);
+  auto entity = MHDECS::Registry::registerEntity<MyEntity>(constructor args...); // Returns pointer to new entity
 ```
 
 Example without inheritance:
 ```cpp
-  auto entity = MHDECS::Registry::registerEntity<MHDECS::IEntity>();
+  auto entity = MHDECS::Registry::registerEntity<MHDECS::IEntity>(); // Returns pointer to new entity
+```
+
+If you already have an existing entity:
+```cpp
+    MHDECS::Registry::registerEntity(entity);
 ```
 
 You can manipulate with components:
@@ -68,8 +73,20 @@ Example:
   // Call an update signal for specified type of component
   MHDECS::Registry::update<MyComponent>();
 
+  // Create new entity
+  auto entity = MHDECS::Registry::registerEntity<MyEntity>(constructor args...); // Returns pointer to new entity
+
+  // Register existing entity
+  MHDECS::Registry::registerEntity(entity);
+
   // Unregister entity
   MHDECS::Registry::unregisterEntity(entity);
+
+  // Get all entities with specified component
+  std::vector<MHDECS::IEntity*> entities = MHDECS::Registry::getEntitiesWithComponent<MyComponent>();
+
+  // You can also require 2 and more components
+  std::vector<MHDECS::IEntity*> entities = MHDECS::Registry::getEntitiesWithComponent<MyOtherComponent>(MHDECS::Registry::getEntitiesWithComponent<MyComponent>());
 
 ```
 
