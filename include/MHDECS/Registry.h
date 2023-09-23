@@ -1,6 +1,4 @@
-//
-// Created by Alexander Blinov on 22.09.2023.
-//
+
 
 #ifndef MHDECS_REGISTRY_H
 #define MHDECS_REGISTRY_H
@@ -54,12 +52,24 @@ namespace MHDECS {
                 signalFunctions[type_id][signal] = func;
             }
 
-            static IEntity* registerEntity(IEntity* entity) {
+            template<typename T, typename... Args>
+            static T* registerEntity(Args... args) {
+                if (!std::is_base_of<IEntity, T>::value) {
+                    throw std::runtime_error("[MHDECS] Entity must be inherited from MHDECS::IEntity");
+                }
+
+                IEntity* entity = new T(args...);
+
+                entities.push_back(entity);
+                return (T*) entity;
+
+            }
+
+            static void registerEntity(IEntity* entity) {
                 auto it = std::find(entities.begin(), entities.end(), entity);
 
                 if (it == entities.end()) {
                     entities.push_back(entity);
-                    return entity;
                 } else {
                     throw std::runtime_error("[MHDECS] Entity has already been registered");
                 }

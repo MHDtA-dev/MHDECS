@@ -1,6 +1,3 @@
-//
-// Created by Alexander Blinov on 22.09.2023.
-//
 
 #ifndef MHDECS_COMPONENT_H
 #define MHDECS_COMPONENT_H

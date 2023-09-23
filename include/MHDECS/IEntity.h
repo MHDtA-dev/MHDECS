@@ -1,6 +1,4 @@
-//
-// Created by Alexander Blinov on 22.09.2023.
-//
+
 
 #ifndef MHDECS_IENTITY_H
 #define MHDECS_IENTITY_H
@@ -40,17 +38,20 @@ namespace MHDECS {
         CHECK_COMPONENT_TYPE_VALID
 
         int indexToDelete = -1;
+        Component* compToDelete = nullptr;
 
         for (int i = 0; i < components.size(); i++) {
             Component* comp = components[i];
             if (dynamic_cast<C*>(comp) != nullptr) {
                 indexToDelete = i;
+                compToDelete = comp;
             }
         }
 
         if (indexToDelete == -1) return false;
 
         components.erase(components.begin() + indexToDelete);
+        delete compToDelete;
         return true;
     }
 
