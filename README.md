@@ -61,8 +61,6 @@ Example:
 
 ```cpp
   // Do some actions when the component update signal is called
-
-  
   MHDECS::Registry::connect<MyComponent>(MHDECS::ECS_SIGNAL::UPDATE, [] (MHDECS::IEntity* entity) {
       // Do something
       // MHDECS::IEntity* entity is the entity to which the current component is attached
@@ -81,6 +79,9 @@ Example:
 
   // Unregister entity
   MHDECS::Registry::unregisterEntity(entity);
+
+  // Unregister all entities
+  MHDECS::Registry::unregisterAll();
 
   // Get all entities with specified component
   std::vector<MHDECS::IEntity*> entities = MHDECS::Registry::getEntitiesWithComponent<MyComponent>();
